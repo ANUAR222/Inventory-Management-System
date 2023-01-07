@@ -1,0 +1,36 @@
+//Finally, we'll create a BookController class that defines the REST endpoints for creating, updating, and deleting books, as well as retrieving a list of books based on their title or author:
+
+@RestController
+@RequestMapping("/api/books")
+public class BookController {
+
+    @Autowired
+    private BookService bookService;
+
+    @PostMapping
+    public Book createBook(@RequestBody Book book) {
+        return bookService.createBook(book);
+    }
+
+    @PutMapping
+    public Book updateBook(@RequestBody Book book) {
+        return bookService.updateBook(book);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteBook(@PathVariable Long id) {
+        bookService.deleteBook(id);
+    }
+
+    @GetMapping
+    public List<Book> getBooks(@RequestParam(required = false) String title,
+                               @RequestParam(required = false) String author) {
+        if (title != null) {
+            return bookService.findByTitleContainingIgnoreCase(title);
+        } else if (author != null) {
+            return bookService.findByAuthorContainingIgnoreCase(author);
+        } else {
+            return bookService.findAll();
+        }
+    }
+}
