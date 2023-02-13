@@ -1,6 +1,0 @@
-//Next, we'll create a BookRepository interface that extends JpaRepository and defines methods for retrieving books from the database:
-public interface BookRepository extends JpaRepository<Book, Long> {
-
-    List<Book> findByTitleContainingIgnoreCase(String title);
-    List<Book> findByAuthorContainingIgnoreCase(String author);
-}
